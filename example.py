@@ -1,112 +1,111 @@
-# 1. 字符串
-hi = "hello there"
-name = "ana"
-greet = hi + name  
-print(greet)
-greeting = hi + " " + name
-print(greeting)
-silly = hi + (" " + name)*3
-print(silly)
+###################
+# EXAMPLE: for loops over strings
+###################
+s = "demo loops"
+for index in range(len(s)):
+   if s[index] == 'i' or s[index] == 'u':
+       print("There is an i or u")
 
-x = 1
-print(x)
-x_str = str(x)
-print("my fav number is", x, ".", "x=", x)
-print("my fav number is", x_str + "." + "x=" + x_str)
-print("my fav number is" + x_str + "." + "x=" + x_str)
-
-# 2. 输入
-text = input("Type anything... ")
-print(5*text)
-num = int(input("Type a number... "))
-print(5*num)
-
-# 3. 条件语句 | 分支语句
-x = float(input("Enter a number for x: "))
-y = float(input("Enter a number for y: "))
-if x == y:
-   print("x and y are equal")
-   if y != 0:
-       print("therefore, x / y is", x/y)
-elif x < y:
-   print("x is smaller")
-elif x > y:
-   print("y is smaller")
-print("thanks!")
-
-# 4. 余数
-num = int(input("Enter a number: "))
-if num % 2 == 0:
-   print("number is even")
-else:
-   print("number is odd")
+for char in s:
+   if char == 'i' or char == 'u':
+       print("There is an i or u")
 
 
 ###################
-# EXAMPLE: while loops 
-# Try expanding this code to show a sad face if you go right
-# twice and flip the table any more times than that. 
-# Hint: use a counter
+# EXAMPLE: while loops and strings
+# CHALLENGE: rewrite while loop with a for loop
 ###################
-n = input("You are in the Lost Forest\n****************\n****************\n :)\n****************\n****************\nGo left or right? ")
-while n == "right" or n == "Right":
-   n = input("You are in the Lost Forest\n****************\n******       ***\n  (鈺扳枴掳锛夆暞锔� 鈹烩攣鈹籠n****************\n****************\nGo left or right? ")
-print("\nYou got out of the Lost Forest!\n\o/")
+an_letters = "aefhilmnorsxAEFHILMNORSX"
+word = input("I will cheer for you! Enter a word: ")
+times = int(input("Enthusiasm level (1-10): "))
+
+i = 0
+while i < len(word):
+   char = word[i]
+   if char in an_letters:
+       print("Give me an " + char + "! " + char)
+   else:
+       print("Give me a  " + char + "! " + char)
+   i += 1
+print("What does that spell?")
+for i in range(times):
+   print(word, "!!!")
 
 
-
-n = 0
-while n < 5:
-   print(n)
-   n = n+1
-
+    
+###################
+# EXAMPLE: perfect cube 
+###################
+cube = 27
+#cube = 8120601
+for guess in range(cube+1):
+   if guess**3 == cube:
+       print("Cube root of", cube, "is", guess)
+       # loops keeps going even after found the cube root
+    
 
 ###################
-# EXAMPLE: for loops
+# EXAMPLE: guess and check cube root 
 ###################
-for n in range(5):
-   print(n)
-
-mysum = 0
-for i in range(10):
-   mysum += i
-print(mysum)
-
-mysum = 0
-for i in range(7, 10):
-   mysum += i
-print(mysum)
-
-mysum = 0
-for i in range(5, 11, 2):
-   mysum += i
-   if mysum == 5:
+cube = 27
+#cube = 8120601
+for guess in range(abs(cube)+1):
+   # passed all potential cube roots
+   if guess**3 >= abs(cube):
+       # no need to keep searching
        break
-       mysum += 1
-print(mysum)
-
-
-
-###################
-# EXAMPLE: perfect squares
-###################
-ans = 0
-neg_flag = False
-x = int(input("Enter an integer: "))
-if x < 0:
-   neg_flag = True
-while ans**2 < x:
-   ans = ans + 1
-if ans**2 == x:
-   print("Square root of", x, "is", ans)
+if guess**3 != abs(cube):
+   print(cube, 'is not a perfect cube')
 else:
-   print(x, "is not a perfect square")
-   if neg_flag:
-       print("Just checking... did you mean", -x, "?")
+   if cube < 0:
+       guess = -guess
+   print('Cube root of ' + str(cube) + ' is ' + str(guess))
 
 
 ###################
-# TEST YOURSELF!
-# Modify the perfect squares example to print 
-# imaginary perfect sqrts if given a negative num.
+# EXAMPLE: approximate cube root 
 ###################
+cube = 27
+#cube = 8120601
+#cube = 10000
+epsilon = 0.1
+guess = 0.0
+increment = 0.01
+num_guesses = 0
+# look for close enough answer and make sure
+# didn't accidentally skip the close enough bound
+while abs(guess**3 - cube) >= epsilon and guess <= cube:
+   guess += increment
+   num_guesses += 1
+print('num_guesses =', num_guesses)
+if abs(guess**3 - cube) >= epsilon:
+   print('Failed on cube root of', cube, "with these parameters.")
+else:
+   print(guess, 'is close to the cube root of', cube)
+
+
+###################
+# EXAMPLE: bisection cube root (only positive cubes!)
+###################
+cube = 27
+#cube = 8120601
+# won't work with x < 1 because initial upper bound is less than ans
+#cube = 0.25
+epsilon = 0.01
+num_guesses = 0
+low = 0
+high = cube
+guess = (high + low)/2.0
+while abs(guess**3 - cube) >= epsilon:
+   if guess**3 < cube:
+       # look only in upper half search space
+       low = guess
+   else:
+       # look only in lower half search space
+       high = guess
+   # next guess is halfway in search space
+   guess = (high + low)/2.0
+   num_guesses += 1
+print('num_guesses =', num_guesses)
+print(guess, 'is close to the cube root of', cube)
+   
